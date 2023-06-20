@@ -1,5 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
+
+import routerPathSlice from "../features/routerPath/routerPathSlice";
 
 export default configureStore({
-  reducer: {}
-})
+  reducer: {
+    routerPath: routerPathSlice,
+  },
+});
