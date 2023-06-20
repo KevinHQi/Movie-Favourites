@@ -4,7 +4,7 @@ const NavBarStyle = {
   width: "100%",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "0 20px",
+  padding: "0 10px",
   backgroundColor: "black",
 };
 

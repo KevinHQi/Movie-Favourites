@@ -12,20 +12,20 @@ import "./styles/index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <App />,
     errorElement: <RouterErrorPage />,
     children: [
       {
-        path: "",
+        path: "/",
         element: <HomePage />,
       },
       {
-        path: "search",
+        path: "/search",
         element: <MovieSearchPage />,
       },
       {
-        path: "fav",
+        path: "/fav",
         element: <FavMoviePage />,
       },
     ],

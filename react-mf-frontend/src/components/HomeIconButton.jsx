@@ -10,13 +10,10 @@ const HomeIconButton = () => {
   const clickHandler = useLinkClickHandler(homePagePath);
 
   return (
-    <Tooltip title="search">
-      <Button
-        type="link"
-        icon={<HomeOutlined />}
-        onClick={clickHandler}
-        style={useLinkClickHandler}
-      />
+    <Tooltip title="Back to home">
+      <Button type="link" onClick={clickHandler} style={HomeIconButtonStyle}>
+        <HomeOutlined />
+      </Button>
     </Tooltip>
   );
 };

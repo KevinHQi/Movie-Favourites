@@ -14,7 +14,6 @@ const FavMovieListButton = () => {
   return (
     <Tooltip title="Find out your favorates!">
       <Button
-        size="large"
         style={FavMovieListButtonStyle}
         icon={<HeartOutlined />}
         type="link"

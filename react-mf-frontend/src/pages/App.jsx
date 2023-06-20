@@ -1,11 +1,22 @@
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateCurrentPath } from "../features/routerPath/routerPathSlice";
 
 import NavBar from "../components/NavBar";
 import { AppStyle, headerStyle, contentStyle } from "../styles/AppStyle";
 
 function App() {
+  let location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(`location: ${location.pathname}`);
+    dispatch(updateCurrentPath(location.pathname));
+  }, [location]);
+
   return (
     <div style={AppStyle}>
       <Layout>
