@@ -9,17 +9,20 @@ const FavMovieListButton = () => {
   const favPagePath = useSelector(
     (state) => state.routerPath.pathToFavMoviePage
   );
+  const isLargeScreen = useSelector(
+    (state) => state.windowSizeTracker.isOnLargeScreen
+  );
   const clickHandler = useLinkClickHandler(favPagePath);
 
   return (
     <Tooltip title="Find out your favorates!">
       <Button
         style={FavMovieListButtonStyle}
-        icon={<HeartOutlined />}
         type="link"
         onClick={clickHandler}
       >
-        {0 + "/" + 5}
+        <HeartOutlined />
+        {isLargeScreen && 0 + "/" + 5}
       </Button>
     </Tooltip>
   );

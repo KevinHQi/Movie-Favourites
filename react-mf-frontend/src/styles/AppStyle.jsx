@@ -1,24 +1,17 @@
 const AppStyle = {
-  backgroundColor: "green",
-  position: "absolute",
-  top: "0",
-  right: "0",
-  left: "0",
-  bottom: "0",
+  width: "100vw",
+  height: "100vh",
+  // backgroundColor: "yellow",
 };
 
 const headerStyle = {
-  color: "white",
-  backgroundColor: "blue",
   height: "70px",
-  right: "0",
-  left: "0",
+  backgroundColor: "blue",
 };
 
 const contentStyle = {
-  color: "black",
-  //   backgroundColor: "black",
-  height: "calc(100vh-70px)",
+  height: "calc(100% - 70px)",
+  backgroundColor: "green",
 };
 
 export { AppStyle, headerStyle, contentStyle };

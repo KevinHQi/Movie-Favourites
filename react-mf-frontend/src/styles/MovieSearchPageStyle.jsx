@@ -1,3 +1,3 @@
 const MovieSearchPageStyle = {};
 
-export default MovieSearchPageStyle;
+export { MovieSearchPageStyle };

@@ -3,8 +3,6 @@ const NavBarStyle = {
   height: "100%",
   width: "100%",
   alignItems: "center",
-  justifyContent: "space-between",
-  padding: "0 10px",
   backgroundColor: "black",
 };
 

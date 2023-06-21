@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import SearchBarStyle from "../styles/SearchBarStyle";
-import { searchMovieByName } from "../features/movieSearchResult/movieSearchResultSlice";
+import { fetchMovieListByName } from "../features/movieSearchResult/movieSearchResultSlice";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,16 +19,14 @@ const SearchBar = () => {
     setSearchTerm(e.target.value);
     const trimedSearchTerm = e.target.value.trim();
     console.log(`Searching: '${trimedSearchTerm}'`);
-    if (trimedSearchTerm !== "") {
-      if (currentPath !== searchPagePath) {
-        navigate(searchPagePath);
-      }
-      dispatch(searchMovieByName(trimedSearchTerm));
+
+    if (currentPath !== searchPagePath) {
+      navigate(searchPagePath);
     }
+    dispatch(fetchMovieListByName(trimedSearchTerm));
   };
 
   useEffect(() => {
-    // console.log(`currentPath: ${currentPath}`);
     if (currentPath !== searchPagePath) {
       setSearchTerm("");
     }
@@ -36,7 +34,7 @@ const SearchBar = () => {
 
   return (
     <Input
-      placeholder="Explore your"
+      placeholder="Explore your next favorate!"
       style={SearchBarStyle}
       allowClear="true"
       bordered="false"

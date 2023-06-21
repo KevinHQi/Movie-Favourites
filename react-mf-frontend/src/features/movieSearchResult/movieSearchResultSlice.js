@@ -1,4 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { useDispatch, useSelector } from "react-redux";
+
+const fetchMovieListByName = createAsyncThunk(
+  "movieSearchResult/fetchMovieListByName",
+  (serachTerm, { getState }) => {
+    const currentState = getState().movieSearchResult;
+    if (serachTerm.length < currentState.minLenOfSearchTerm) {
+      throw new Error(
+        `Provide me at least ${currentState.minLenOfSearchTerm} characters to search!`
+      );
+    }
+
+    const escapedSerachTerm = encodeURIComponent(serachTerm);
+
+    console.log(`search result start fetching...`);
+    return fetch(
+      `${currentState.OMDbUrl}?apikey=${currentState.OMDbKey}&s=${escapedSerachTerm}&type=movie`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+  }
+);
 
 export const movieSearchResultSlice = createSlice({
   name: "movieSearchResult",
@@ -9,46 +35,37 @@ export const movieSearchResultSlice = createSlice({
     OMDbUrl: "http://www.omdbapi.com/",
     errorToDisplay: "",
     minLenOfSearchTerm: 3,
-    searchTermTooShortErrorMsg: "Provide me at least 3 characters to search!",
     isPending: false,
   },
   reducers: {
-    searchMovieByName: (state, action) => {
-      if (action.payload.length < state.minLenOfSearchTerm) {
-        state.errorToDisplay = state.searchTermTooShortErrorMsg;
-        return;
-      }
-
-      const serachTerm = encodeURIComponent(action.payload);
-      console.log(`search result start fetching...`);
-      fetch(`${state.OMDbUrl}?apikey=${state.OMDbKey}&s=${serachTerm}`)
-        .then((response) => {
-          console.log("Search Response:", response);
-          state.isPending = true;
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Search data:", data);
-          state.isPending = false;
-          if (data.Response === "False") {
-            state.errorToDisplay = data.Error;
-          } else {
-            state.resultList = data.Search;
-            state.errorToDisplay = "";
-          }
-        })
-        .catch((err) => {
-          console.error(err.message);
-          state.isPending = false;
-          state.errorToDisplay = err.message;
-        });
-    },
     updateChosenResultDetail: (state, action) => {
       state.chosenResultDetail = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchMovieListByName.pending, (state) => {
+      state.isPending = true;
+    });
+    builder.addCase(fetchMovieListByName.fulfilled, (state, action) => {
+      state.isPending = false;
+      console.log(action.payload);
+      if (action.payload.Response === "True") {
+        state.errorToDisplay = "";
+        state.resultList = action.payload.Search;
+      } else {
+        state.errorToDisplay = action.payload.Error;
+        state.resultList = [];
+      }
+    });
+    builder.addCase(fetchMovieListByName.rejected, (state, action) => {
+      state.isPending = false;
+      state.resultList = [];
+      state.errorToDisplay = action.error.message;
+      console.log(action.error.message);
+    });
+  },
 });
 
-export const { updateChosenResultDetail, searchMovieByName } =
-  movieSearchResultSlice.actions;
+export const { updateChosenResultDetail } = movieSearchResultSlice.actions;
+export { fetchMovieListByName };
 export default movieSearchResultSlice.reducer;

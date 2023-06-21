@@ -4,6 +4,7 @@ const HomeIconButtonStyle = {
   alignItems: "center",
   justifyContent: "center",
   display: "flex",
+  float: "left",
 };
 
 export default HomeIconButtonStyle;
