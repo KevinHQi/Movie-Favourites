@@ -1,9 +1,10 @@
 import { Input } from "antd";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import SearchBarStyle from "../styles/SearchBarStyle";
+import { searchMovieByName } from "../features/movieSearchResult/movieSearchResultSlice";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,18 +12,23 @@ const SearchBar = () => {
   const searchPagePath = useSelector(
     (state) => state.routerPath.pathToMovieSearchPage
   );
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSearchTermUpdate = (e) => {
     setSearchTerm(e.target.value);
-    console.log(`Searching: ${searchTerm}`);
-    if (searchTerm !== "") {
-      navigate(searchPagePath);
+    const trimedSearchTerm = e.target.value.trim();
+    console.log(`Searching: '${trimedSearchTerm}'`);
+    if (trimedSearchTerm !== "") {
+      if (currentPath !== searchPagePath) {
+        navigate(searchPagePath);
+      }
+      dispatch(searchMovieByName(trimedSearchTerm));
     }
   };
 
   useEffect(() => {
-    console.log(`currentPath: ${currentPath}`);
+    // console.log(`currentPath: ${currentPath}`);
     if (currentPath !== searchPagePath) {
       setSearchTerm("");
     }

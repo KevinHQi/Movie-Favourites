@@ -13,9 +13,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(`location: ${location.pathname}`);
+    // console.log(`location: ${location.pathname}`);
     dispatch(updateCurrentPath(location.pathname));
   }, [location]);
+
+  useEffect(() => {});
 
   return (
     <div style={AppStyle}>
