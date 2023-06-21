@@ -33,7 +33,7 @@ export const movieSearchResultSlice = createSlice({
     chosenResultDetail: {},
     OMDbKey: config.OMDB_KEY,
     OMDbUrl: "http://www.omdbapi.com/",
-    errorToDisplay: "",
+    errorToDisplay: "No search input",
     minLenOfSearchTerm: 3,
     isPending: false,
   },
@@ -52,6 +52,7 @@ export const movieSearchResultSlice = createSlice({
       if (action.payload.Response === "True") {
         state.errorToDisplay = "";
         state.resultList = action.payload.Search;
+        state.chosenResultDetail = state.resultList[0];
       } else {
         state.errorToDisplay = action.payload.Error;
         state.resultList = [];

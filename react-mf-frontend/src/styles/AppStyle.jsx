@@ -11,7 +11,7 @@ const headerStyle = {
 
 const contentStyle = {
   height: "calc(100% - 70px)",
-  backgroundColor: "green",
+  backgroundColor: "#10171d",
 };
 
 export { AppStyle, headerStyle, contentStyle };

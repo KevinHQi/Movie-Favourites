@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import { notification } from "antd";
+import { useEffect } from "react";
 
 import MovieDetail from "../components/MovieDetail";
 import MovieHorizList from "../components/MovieHorizList";
@@ -9,16 +11,37 @@ const MovieSearchPage = () => {
   const searchError = useSelector(
     (state) => state.movieSearchResult.errorToDisplay
   );
-  const windowHeight = useSelector((state) => state.windowSizeTracker.height);
+  const isPending = useSelector((state) => state.movieSearchResult.isPending);
+  const movieList = useSelector((state) => state.movieSearchResult.resultList);
+  const errorToDisplay = useSelector(
+    (state) => state.movieSearchResult.errorToDisplay
+  );
+  const chosenMovieObj = useSelector(
+    (state) => state.movieSearchResult.chosenResultDetail
+  );
+
+  const favListNotification = useSelector(
+    (state) => state.movieFavList.notification
+  );
+  const [api, contextHolder] = notification.useNotification();
+
+  useEffect(() => {
+    if (favListNotification !== "") {
+      api["warning"]({
+        message: favListNotification,
+      });
+    }
+  }, [favListNotification]);
 
   return (
     <div>
+      {contextHolder}
       {searchError === "" ? (
         <div>
-          <div style={{ height: windowHeight - windowHeight * 0.3 - 70 }}>
-            <MovieDetail />
+          <div style={{ height: "calc(100vh - 100vh * 0.3 - 70px)" }}>
+            {chosenMovieObj != {} && <MovieDetail />}
           </div>
-          <div style={{ height: windowHeight * 0.3 }}>
+          <div style={{ height: "calc(100vh * 0.3)" }}>
             <MovieHorizList />
           </div>
         </div>

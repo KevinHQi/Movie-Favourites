@@ -5,14 +5,41 @@ export const movieFavListSlice = createSlice({
   initialState: {
     currentFavAmount: 0,
     maxFavAmount: 5,
-    favList: {},
+    favList: [],
+    notification: "",
+    amountReachMaxMsg: "Your favorate movie list is full!",
+    isReachMaxAmount: false,
   },
   reducers: {
     updateWholeFavList: (state, action) => {
       state.favList = action.payload;
+      if (state.favList.length === state.maxFavAmount) {
+        state.notification = state.amountReachMaxMsg;
+        state.isReachMaxAmount = true;
+      } else {
+        state.notification = "";
+        state.isReachMaxAmount = false;
+      }
     },
-    addToFavList: (state, action) => {},
-    removeFromFavList: (state, action) => {},
+    addToFavList: (state, action) => {
+      state.favList.push(action.payload);
+      state.currentFavAmount++;
+      if (state.favList.length === state.maxFavAmount) {
+        state.notification = state.amountReachMaxMsg;
+        state.isReachMaxAmount = true;
+      } else {
+        state.notification = "";
+        state.isReachMaxAmount = false;
+      }
+    },
+    removeFromFavList: (state, action) => {
+      state.favList = state.favList.filter((movie) => {
+        return movie.imdbID !== action.payload.imdbID;
+      });
+      state.currentFavAmount--;
+      state.isReachMaxAmount = false;
+      state.notification = "";
+    },
   },
 });
 

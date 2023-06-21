@@ -1,6 +1,4 @@
-const MovieDetailStyle = {};
-
-const ColContentStyle = {
+const HomePageStyle = {
   float: "right",
   margin: "0",
   position: "absolute",
@@ -10,4 +8,4 @@ const ColContentStyle = {
   fontSize: "60px",
 };
 
-export { MovieDetailStyle, ColContentStyle };
+export default HomePageStyle;

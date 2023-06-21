@@ -12,19 +12,17 @@ const FavMovieListButton = () => {
   const isLargeScreen = useSelector(
     (state) => state.windowSizeTracker.isOnLargeScreen
   );
+  const currentFavAmount = useSelector(
+    (state) => state.movieFavList.currentFavAmount
+  );
+  const maxFavAmount = useSelector((state) => state.movieFavList.maxFavAmount);
   const clickHandler = useLinkClickHandler(favPagePath);
 
   return (
-    <Tooltip title="Find out your favorates!">
-      <Button
-        style={FavMovieListButtonStyle}
-        type="link"
-        onClick={clickHandler}
-      >
-        <HeartOutlined />
-        {isLargeScreen && 0 + "/" + 5}
-      </Button>
-    </Tooltip>
+    <div style={FavMovieListButtonStyle}>
+      <HeartOutlined />
+      {isLargeScreen && `${currentFavAmount}/${maxFavAmount}`}
+    </div>
   );
 };
 

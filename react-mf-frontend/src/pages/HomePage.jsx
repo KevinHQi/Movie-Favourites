@@ -1,7 +1,9 @@
+import HomePageStyle from "../styles/HomePageStyle";
+
 const HomePage = () => {
   return (
-    <div>
-      <p>This is homepage</p>
+    <div style={HomePageStyle}>
+      <p>Uncover a universe of captivating movies with our search.</p>
     </div>
   );
 };
